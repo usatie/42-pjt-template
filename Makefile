@@ -6,7 +6,7 @@
 #    By: susami </var/mail/susami>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/21 11:23:06 by susami            #+#    #+#              #
-#    Updated: 2022/06/21 11:51:04 by susami           ###   ########.fr        #
+#    Updated: 2022/06/21 11:54:30 by susami           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,11 @@ OBJS		=	$(SRCS:%.c=$(OBJDIR)/%.o)
 
 
 init:
-	@echo "Remove this Make target after executing init."
 	[ ! -d tmp ] && git clone git@github.com:usatie/libft tmp || echo "libft already installed"
 	./tmp/rsync.sh libft
 	rsync -av libft/include/ include
 	$(RM) -r tmp
+	@echo "You should remove this make target."
 
 all: $(NAME)
 
