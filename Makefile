@@ -6,7 +6,7 @@
 #    By: susami </var/mail/susami>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/21 11:23:06 by susami            #+#    #+#              #
-#    Updated: 2022/06/21 11:56:52 by susami           ###   ########.fr        #
+#    Updated: 2022/06/21 16:21:26 by susami           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,32 +15,38 @@ CFLAGS		=	-Wall -Wextra -Werror
 INCLUDES	=	-Iinclude
 
 LIBFTDIR	=	libft
-LIBS		=	-L $(LIBFT) -lft
+LIBFT		=	$(LIBFTDIR)/libft.a
+LIBS		=	-L $(LIBFTDIR) -lft
 
-SRCS		=	srcs/main.c
-OBJDIR		=	objs
+SRCS		=	src/main.c
+OBJDIR		=	obj
 OBJS		=	$(SRCS:%.c=$(OBJDIR)/%.o)
 
-
-init:
-	[ ! -d tmp ] && git clone git@github.com:usatie/libft tmp || echo "libft already installed"
-	./tmp/rsync.sh libft
-	rsync -av libft/include/ include
-	$(RM) -r tmp
-	@printf "\e[32mA project is successfully initialized.\nNow, you should remove make target 'init:'.\e[m\n"
-
+.PHONY: all clean fclean re bonus
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(LIBS) -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIBS) -o $(NAME) $(OBJS)
+
+$(OBJDIR)/%.o: %.c
+	mkdir -p $(@D)
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 clean:
 	$(RM) *.o *.out
 	$(RM) -r $(OBJDIR)
-	$(MAKE) clean -C $(LIBFTDIR)
 
 fclean: clean
 	$(RM) $(NAME)
-	$(MAKE) fclean -C $(LIBFTDIR)
 
 re: fclean all
+
+bonus:
+
+.PHONY: libft
+libft:
+	$(MAKE) -C $(LIBFTDIR) re
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFTDIR)
+
