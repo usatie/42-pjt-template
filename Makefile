@@ -6,7 +6,7 @@
 #    By: susami </var/mail/susami>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/21 11:23:06 by susami            #+#    #+#              #
-#    Updated: 2022/06/21 11:54:30 by susami           ###   ########.fr        #
+#    Updated: 2022/06/21 11:56:52 by susami           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ init:
 	./tmp/rsync.sh libft
 	rsync -av libft/include/ include
 	$(RM) -r tmp
-	@echo "You should remove this make target."
+	@printf "\e[32mA project is successfully initialized.\nNow, you should remove make target 'init:'.\e[m\n"
 
 all: $(NAME)
 
